@@ -19,10 +19,10 @@ export default {
       return Response.json({
         status: 'ok',
         name: 'basecamp-mcp-server-expanded',
-        version: '4.1.0',
+        version: '4.2.0',
         protocol: 'MCP 2025-03-26',
-        tools: 27,
-        categories: ['Projects', 'Todos', 'Messages', 'Documents', 'Schedules', 'People', 'Campfire', 'Cards', 'Webhooks'],
+        tools: 28,
+        categories: ['Projects', 'Todos', 'Messages', 'Documents', 'Schedules', 'People', 'Campfire', 'Cards', 'Webhooks', 'Utilities'],
         compatibility: ['n8n', 'Make.com', 'Claude Desktop']
       }, { headers: corsHeaders });
     }
@@ -48,7 +48,7 @@ export default {
               },
               serverInfo: {
                 name: "basecamp-mcp-server-expanded",
-                version: "4.0.0"
+                version: "4.2.0"
               }
             };
             break;
@@ -437,6 +437,18 @@ function getAllBasecampTools() {
         additionalProperties: false
       }
     },
+    {
+      name: "get_project_features",
+      description: "Check which features are enabled/disabled in a Basecamp project",
+      inputSchema: {
+        type: "object",
+        properties: {
+          project_id: { type: "number", description: "The ID of the project" }
+        },
+        required: ["project_id"],
+        additionalProperties: false
+      }
+    },
 
     // WEBHOOK MANAGEMENT
     {
@@ -704,7 +716,7 @@ async function callBasecampTool(toolName: string, args: any, env: any): Promise<
         const cardProjectData = await cardProjectResponse.json();
         const cardTableDock = cardProjectData.dock.find((item: any) => item.name === 'kanban_board');
         if (!cardTableDock || !cardTableDock.enabled) {
-          throw new Error('Card Table (Kanban board) is not enabled for this project. Enable it in Basecamp settings first.');
+          throw new Error('Card Table (Kanban board) is not enabled for this project. To enable it: Go to your Basecamp project → Click the "+" button → Select "Card Table" → Turn it on. Then try again.');
         }
         response = await fetch(`${baseUrl}/buckets/${args.project_id}/card_tables/${args.card_table_id}.json`, { headers, signal: controller.signal });
         break;
@@ -718,7 +730,7 @@ async function callBasecampTool(toolName: string, args: any, env: any): Promise<
         const createCardProjectData = await createCardProjectResponse.json();
         const createCardTableDock = createCardProjectData.dock.find((item: any) => item.name === 'kanban_board');
         if (!createCardTableDock || !createCardTableDock.enabled) {
-          throw new Error('Card Table (Kanban board) is not enabled for this project. Enable it in Basecamp settings first.');
+          throw new Error('Card Table (Kanban board) is not enabled for this project. To enable it: Go to your Basecamp project → Click the "+" button → Select "Card Table" → Turn it on. Then try again.');
         }
         response = await fetch(`${baseUrl}/buckets/${args.project_id}/card_tables/${args.card_table_id}/cards.json`, {
           method: 'POST',
@@ -776,6 +788,44 @@ async function callBasecampTool(toolName: string, args: any, env: any): Promise<
           };
         }
         break;
+
+      case 'get_project_features':
+        // Get project to analyze enabled/disabled features
+        const featuresProjectResponse = await fetch(`${baseUrl}/projects/${args.project_id}.json`, { headers, signal: controller.signal });
+        if (!featuresProjectResponse.ok) {
+          throw new Error(`Failed to get project: ${featuresProjectResponse.status}`);
+        }
+        const featuresProjectData = await featuresProjectResponse.json();
+        
+        // Analyze dock to determine feature status
+        const featureStatus = {
+          project_name: featuresProjectData.name,
+          project_id: featuresProjectData.id,
+          features: {
+            message_board: featuresProjectData.dock.find((item: any) => item.name === 'message_board')?.enabled || false,
+            todos: featuresProjectData.dock.find((item: any) => item.name === 'todoset')?.enabled || false,
+            documents: featuresProjectData.dock.find((item: any) => item.name === 'vault')?.enabled || false,
+            chat: featuresProjectData.dock.find((item: any) => item.name === 'chat')?.enabled || false,
+            schedule: featuresProjectData.dock.find((item: any) => item.name === 'schedule')?.enabled || false,
+            card_table: featuresProjectData.dock.find((item: any) => item.name === 'kanban_board')?.enabled || false,
+            questionnaire: featuresProjectData.dock.find((item: any) => item.name === 'questionnaire')?.enabled || false,
+            inbox: featuresProjectData.dock.find((item: any) => item.name === 'inbox')?.enabled || false
+          },
+          instructions: {
+            enable_features: "To enable features: Go to your Basecamp project → Click the '+' button → Select the feature → Turn it on",
+            card_table_note: "Card Table (Kanban) must be enabled before using card-related tools",
+            schedule_note: "Schedule must be enabled before using schedule-related tools"
+          }
+        };
+        
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(featureStatus, null, 2)
+            }
+          ]
+        };
 
       // WEBHOOKS
       case 'create_webhook':

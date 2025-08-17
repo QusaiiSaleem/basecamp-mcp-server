@@ -4,7 +4,7 @@ A comprehensive Model Context Protocol (MCP) server that provides complete Basec
 
 ## ✨ Features
 
-- **27 Basecamp Tools**: Complete project management automation
+- **28 Basecamp Tools**: Complete project management automation
 - **OAuth 2.0 Authentication**: Secure Basecamp API access
 - **MCP Protocol Compliance**: Compatible with n8n, Make.com, and Claude Desktop
 - **Intelligent Error Handling**: Smart detection of disabled Basecamp features
@@ -51,8 +51,9 @@ A comprehensive Model Context Protocol (MCP) server that provides complete Basec
 - `create_card` - Create new cards
 - `move_card` - Move cards between columns
 
-### Search (1 tool)
+### Search & Utilities (2 tools)
 - `search` - Search across all Basecamp content
+- `get_project_features` - Check enabled/disabled project features
 
 ### Webhooks (4 tools)
 - `create_webhook` - Set up real-time notifications
@@ -283,9 +284,9 @@ Expected response:
 {
   "status": "ok",
   "name": "basecamp-mcp-server-expanded",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "protocol": "MCP 2025-03-26",
-  "tools": 27,
+  "tools": 28,
   "categories": ["Projects", "Todos", "Messages", "Documents", "Schedules", "People", "Campfire", "Cards", "Webhooks"],
   "compatibility": ["n8n", "Make.com", "Claude Desktop"]
 }
@@ -390,7 +391,7 @@ The MCP server is built on Cloudflare Workers for:
 
 ## 🔄 Version History
 
-- **v4.1.0**: Full 27-tool implementation with webhooks and smart error handling
+- **v4.2.0**: Enhanced error handling with 28 tools including project feature detection
 - **v4.0.0**: Complete MCP protocol compliance with dynamic ID resolution
 - **v3.0.0**: OAuth authentication and production deployment
 - **v2.0.0**: n8n and Make.com compatibility
