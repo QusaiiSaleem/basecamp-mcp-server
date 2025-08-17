@@ -23,12 +23,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fouq-agency/basecamp-mcp-server.git"
+    "url": "https://github.com/QusaiiSaleem/basecamp-mcp-server.git"
   },
   "bugs": {
-    "url": "https://github.com/fouq-agency/basecamp-mcp-server/issues"
+    "url": "https://github.com/QusaiiSaleem/basecamp-mcp-server/issues"
   },
-  "homepage": "https://github.com/fouq-agency/basecamp-mcp-server#readme",
+  "homepage": "https://github.com/QusaiiSaleem/basecamp-mcp-server#readme",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241127.0"
   },

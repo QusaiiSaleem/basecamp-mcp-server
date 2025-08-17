@@ -83,7 +83,7 @@ A comprehensive Model Context Protocol (MCP) server that provides complete Basec
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/your-username/basecamp-mcp-server.git
+git clone https://github.com/QusaiiSaleem/basecamp-mcp-server.git
 cd basecamp-mcp-server
 ```
 
@@ -376,7 +376,7 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ## 🆘 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/basecamp-mcp-server/issues)
+- **Issues**: [GitHub Issues](https://github.com/QusaiiSaleem/basecamp-mcp-server/issues)
 - **Documentation**: [Basecamp API Docs](https://github.com/basecamp/bc3-api)
 - **MCP Protocol**: [Model Context Protocol](https://modelcontextprotocol.io/)
 
