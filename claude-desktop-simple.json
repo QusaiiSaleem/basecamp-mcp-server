@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "basecamp": {
+      "command": "npx",
+      "args": [
+        "@anthropics/mcp-client-sse",
+        "https://basecamp-mcp-worker.hi-8e8.workers.dev/mcp/sse"
+      ]
+    }
+  }
+}

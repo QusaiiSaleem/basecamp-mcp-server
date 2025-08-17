@@ -16,6 +16,50 @@ export default {
     }
 
     if (request.method === 'GET') {
+      const url = new URL(request.url);
+      
+      // Handle SSE endpoint for Claude Desktop
+      if (url.pathname === '/mcp/sse') {
+        const sseHeaders = {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': '*',
+        };
+
+        // Create readable stream for SSE
+        const { readable, writable } = new TransformStream();
+        const writer = writable.getWriter();
+        const encoder = new TextEncoder();
+
+        // Send initial connection established event
+        writer.write(encoder.encode('data: {"jsonrpc":"2.0","method":"notifications/initialized","params":{}}\n\n'));
+
+        // Keep connection alive with periodic pings
+        const pingInterval = setInterval(() => {
+          try {
+            writer.write(encoder.encode('data: {"jsonrpc":"2.0","method":"notifications/ping","params":{}}\n\n'));
+          } catch (e) {
+            clearInterval(pingInterval);
+          }
+        }, 30000); // Ping every 30 seconds
+
+        // Close connection after 5 minutes to prevent hanging
+        setTimeout(() => {
+          clearInterval(pingInterval);
+          try {
+            writer.close();
+          } catch (e) {
+            // Connection already closed
+          }
+        }, 300000);
+
+        return new Response(readable, { headers: sseHeaders });
+      }
+
+      // Default health check endpoint
       return Response.json({
         status: 'ok',
         name: 'basecamp-mcp-server-expanded',
@@ -23,7 +67,11 @@ export default {
         protocol: 'MCP 2025-03-26',
         tools: 28,
         categories: ['Projects', 'Todos', 'Messages', 'Documents', 'Schedules', 'People', 'Campfire', 'Cards', 'Webhooks', 'Utilities'],
-        compatibility: ['n8n', 'Make.com', 'Claude Desktop']
+        compatibility: ['n8n', 'Make.com', 'Claude Desktop'],
+        endpoints: {
+          sse: '/mcp/sse',
+          http: '/'
+        }
       }, { headers: corsHeaders });
     }
 
