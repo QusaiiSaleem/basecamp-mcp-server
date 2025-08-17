@@ -6,6 +6,7 @@
 # Wrangler configuration (contains secrets and account-specific info)
 .wrangler/
 wrangler.toml
+!wrangler-production.toml
 
 # Node modules
 node_modules/

@@ -1,0 +1,23 @@
+name = "basecamp-mcp-worker"
+main = "index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Production Basecamp Account ID (Fouq Agency)
+BASECAMP_ACCOUNT_ID = "6022466"
+
+# Production secrets (managed via wrangler secret put):
+# BASECAMP_ACCESS_TOKEN - Production OAuth access token from Basecamp
+# BASECAMP_CLIENT_ID - "2d6f508f858abd5101af6f07737df924506218c3"
+# BASECAMP_CLIENT_SECRET - "f6d55354e2ba1d438596dd587c65cff4e38a47a1"
+
+[build]
+command = "echo 'TypeScript compilation via wrangler'"
+
+# Cloudflare Workers CI/CD Configuration
+[triggers]
+crons = []
+
+[placement]
+mode = "smart"
