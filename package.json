@@ -1,0 +1,38 @@
+{
+  "name": "basecamp-mcp-server",
+  "version": "4.1.0",
+  "description": "A comprehensive Model Context Protocol (MCP) server for Basecamp 3 API integration",
+  "main": "index.ts",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "tail": "wrangler tail"
+  },
+  "keywords": [
+    "basecamp",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "automation",
+    "n8n",
+    "make",
+    "claude",
+    "cloudflare-workers"
+  ],
+  "author": "Fouq Agency",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fouq-agency/basecamp-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fouq-agency/basecamp-mcp-server/issues"
+  },
+  "homepage": "https://github.com/fouq-agency/basecamp-mcp-server#readme",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
