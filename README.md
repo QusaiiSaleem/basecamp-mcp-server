@@ -1,31 +1,36 @@
 # Basecamp MCP Server
 
-A comprehensive Model Context Protocol (MCP) server that provides complete Basecamp 3 API integration for AI automation platforms like n8n, Make.com, and Claude Desktop.
+A comprehensive Model Context Protocol (MCP) server that provides **complete Basecamp 4 API coverage** for AI automation platforms like n8n, Make.com, and Claude Desktop.
 
 ## ✨ Features
 
-- **28 Basecamp Tools**: Complete project management automation
+- **60 Basecamp Tools**: Complete API coverage (5x more tools than basic implementations)
 - **OAuth 2.0 Authentication**: Secure Basecamp API access
 - **MCP Protocol Compliance**: Compatible with n8n, Make.com, and Claude Desktop
 - **Intelligent Error Handling**: Smart detection of disabled Basecamp features
 - **Dynamic ID Resolution**: Auto-discovers project dock configurations
 - **Real-time Webhooks**: Live notifications for project changes
+- **File Management**: Upload, download, and manage attachments
+- **Comment System**: Full comment thread management
+- **Template Support**: Project templates and boilerplates
+- **Subscription Management**: Follow/unfollow features
+- **Advanced Analytics**: Events, audit trails, and reporting
 
-## 🛠️ Tool Categories
+## 🛠️ Tool Categories (60 Total)
 
 ### Projects (3 tools)
 - `get_projects` - List all Basecamp projects
 - `create_project` - Create new projects
 - `get_project` - Get project details
 
-### Todos (5 tools)
+### Todo Management (5 tools)
 - `get_todo_lists` - Get todo lists from project
 - `create_todo_list` - Create new todo lists
 - `get_todos` - Get todos from lists
 - `create_todo` - Create new todo items
 - `complete_todo` - Mark todos as done
 
-### Messages (3 tools)
+### Messages & Communication (3 tools)
 - `get_message_board` - Access message boards
 - `get_messages` - Read messages
 - `create_message` - Post new messages
@@ -34,9 +39,10 @@ A comprehensive Model Context Protocol (MCP) server that provides complete Basec
 - `get_documents` - List project documents
 - `create_document` - Create new documents
 
-### People (2 tools)
+### People & Team (3 tools)
 - `get_people` - Get project team members
 - `get_all_people` - Get all account users
+- `update_project_access` - Add/remove team members
 
 ### Campfire Chat (2 tools)
 - `get_campfire` - Access chat rooms
@@ -46,10 +52,57 @@ A comprehensive Model Context Protocol (MCP) server that provides complete Basec
 - `get_schedule` - Access project calendars
 - `create_schedule_entry` - Create calendar events
 
-### Cards/Kanban (3 tools)
+### Card Tables/Kanban (3 tools)
 - `get_card_table` - Access Kanban boards
 - `create_card` - Create new cards
 - `move_card` - Move cards between columns
+
+### File Management & Attachments (6 tools)
+- `upload_file` - Upload files to projects
+- `get_vault` - Access file storage vault
+- `get_attachments` - List file attachments
+- `download_attachment` - Download specific files
+- `create_attachment` - Attach files to records
+- `get_attachment_info` - Get file metadata
+
+### Comments System (5 tools)
+- `get_comments` - Read comment threads
+- `create_comment` - Post new comments
+- `update_comment` - Edit existing comments
+- `delete_comment` - Remove comments
+- `get_comment_thread` - Get full conversation
+
+### Subscription Management (4 tools)
+- `subscribe_to_recording` - Follow items for updates
+- `unsubscribe_from_recording` - Stop following items
+- `get_subscriptions` - List current subscriptions
+- `update_subscription_settings` - Modify notification preferences
+
+### Template System (7 tools)
+- `get_project_templates` - List available templates
+- `create_project_template` - Save project as template
+- `create_project_from_template` - Use template for new project
+- `get_template_details` - View template specifications
+- `update_project_template` - Modify existing templates
+- `delete_project_template` - Remove templates
+- `get_boilerplate_projects` - Access starter projects
+
+### Recording Management (4 tools)
+- `get_recordings` - List all project items
+- `get_recording_details` - Get specific item details
+- `update_recording` - Modify project items
+- `delete_recording` - Remove project items
+
+### Events & Audit Trail (1 tool)
+- `get_events` - View project activity timeline
+
+### Client-Specific Features (2 tools)
+- `get_client_approvals` - Access approval workflows
+- `get_client_access` - Manage client permissions
+
+### Advanced Features (2 tools)
+- `get_project_construction` - View project structure
+- `get_reports` - Generate project reports
 
 ### Search & Utilities (2 tools)
 - `search` - Search across all Basecamp content
@@ -283,12 +336,13 @@ Expected response:
 ```json
 {
   "status": "ok",
-  "name": "basecamp-mcp-server-expanded",
-  "version": "4.2.0",
+  "name": "basecamp-mcp-server-comprehensive",
+  "version": "5.0.0",
   "protocol": "MCP 2025-03-26",
-  "tools": 28,
-  "categories": ["Projects", "Todos", "Messages", "Documents", "Schedules", "People", "Campfire", "Cards", "Webhooks"],
-  "compatibility": ["n8n", "Make.com", "Claude Desktop"]
+  "tools": 60,
+  "categories": ["Projects", "Todos", "Messages", "Documents", "Files", "Comments", "Subscriptions", "Templates", "Records", "Events", "Clients", "Advanced", "Search", "Webhooks"],
+  "compatibility": ["n8n", "Make.com", "Claude Desktop"],
+  "coverage": "Complete Basecamp 4 API"
 }
 ```
 
@@ -391,6 +445,16 @@ The MCP server is built on Cloudflare Workers for:
 
 ## 🔄 Version History
 
+- **v5.0.0**: 🎉 **Complete Basecamp API Coverage** - 60 tools (32 new tools added)
+  - File management & attachments (6 tools)
+  - Complete comments system (5 tools) 
+  - Subscription management (4 tools)
+  - Template system (7 tools)
+  - Recording management (4 tools)
+  - Events & audit trail (1 tool)
+  - Client-specific features (2 tools)
+  - Advanced project features (2 tools)
+  - Enhanced team management
 - **v4.2.0**: Enhanced error handling with 28 tools including project feature detection
 - **v4.0.0**: Complete MCP protocol compliance with dynamic ID resolution
 - **v3.0.0**: OAuth authentication and production deployment
