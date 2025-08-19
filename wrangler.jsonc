@@ -1,0 +1,27 @@
+{
+  "name": "basecamp-mcp-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-03-07",
+  "compatibility_flags": ["nodejs_compat"],
+  
+  "vars": {
+    "BASECAMP_ACCOUNT_ID": "6022466"
+  },
+  
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+
+  "build": {
+    "command": "",
+    "cwd": "",
+    "watch_dir": ""
+  },
+
+  "dev": {
+    "port": 8787,
+    "local_protocol": "http",
+    "upstream_protocol": "https"
+  }
+}
