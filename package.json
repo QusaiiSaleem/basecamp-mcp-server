@@ -1,5 +1,5 @@
 {
-  "name": "basecamp-mcp-server-enhanced",
+  "name": "basecamp-mcp-server",
   "version": "4.3.0",
   "description": "Enhanced Basecamp MCP Server with AUTO-LOOKUP for 7 high-risk tools",
   "main": "src/index.ts",
@@ -12,14 +12,27 @@
   "keywords": [
     "basecamp",
     "mcp",
+    "model-context-protocol",
     "cloudflare",
     "workers",
     "ai",
     "automation",
-    "api"
+    "api",
+    "n8n",
+    "make",
+    "claude",
+    "cloudflare-workers"
   ],
   "author": "Fouq Agency",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/QusaiiSaleem/basecamp-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/QusaiiSaleem/basecamp-mcp-server/issues"
+  },
+  "homepage": "https://github.com/QusaiiSaleem/basecamp-mcp-server#readme",
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241127.0",
     "wrangler": "^3.90.0",

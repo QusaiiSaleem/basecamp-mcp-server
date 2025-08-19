@@ -1,0 +1,45 @@
+name: Deploy Basecamp MCP Server
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install --save-dev @cloudflare/workers-types
+        
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy --config wrangler-production.toml
+          
+      - name: Set Cloudflare Worker Secrets
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: secret put BASECAMP_ACCESS_TOKEN --config wrangler-production.toml
+        env:
+          WRANGLER_SECRET_VALUE: ${{ secrets.BASECAMP_ACCESS_TOKEN }}
+          
+      - name: Health Check
+        run: |
+          echo "Waiting for deployment to propagate..."
+          sleep 30
+          curl -f https://basecamp-mcp-worker.hi-8e8.workers.dev || exit 1
+          echo "✅ Deployment successful!"

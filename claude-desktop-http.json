@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "basecamp": {
+      "command": "curl",
+      "args": [
+        "-X", "POST",
+        "https://basecamp-mcp-worker.hi-8e8.workers.dev",
+        "-H", "Content-Type: application/json",
+        "-d", "@-"
+      ]
+    }
+  }
+}

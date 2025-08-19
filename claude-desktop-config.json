@@ -1,0 +1,85 @@
+{
+  "mcpServers": {
+    "basecamp": {
+      "command": "node",
+      "args": ["-e", "
+        const https = require('https');
+        const EventSource = require('eventsource');
+        
+        // MCP over SSE client for Basecamp
+        const serverUrl = 'https://basecamp-mcp-worker.hi-8e8.workers.dev';
+        const sseUrl = serverUrl + '/mcp/sse';
+        
+        let messageId = 1;
+        
+        // Connect to SSE endpoint
+        const eventSource = new EventSource(sseUrl);
+        
+        eventSource.onopen = () => {
+          console.error('Connected to Basecamp MCP server');
+        };
+        
+        eventSource.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+            console.log(JSON.stringify(data));
+          } catch (e) {
+            console.error('Failed to parse SSE message:', e);
+          }
+        };
+        
+        eventSource.onerror = (error) => {
+          console.error('SSE connection error:', error);
+        };
+        
+        // Handle stdin for MCP requests
+        process.stdin.on('data', (data) => {
+          try {
+            const request = JSON.parse(data.toString());
+            
+            // Send HTTP request for MCP calls
+            const postData = JSON.stringify(request);
+            const options = {
+              hostname: 'basecamp-mcp-worker.hi-8e8.workers.dev',
+              path: '/',
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(postData)
+              }
+            };
+            
+            const req = https.request(options, (res) => {
+              let responseData = '';
+              res.on('data', (chunk) => responseData += chunk);
+              res.on('end', () => {
+                try {
+                  const response = JSON.parse(responseData);
+                  console.log(JSON.stringify(response));
+                } catch (e) {
+                  console.error('Failed to parse response:', e);
+                }
+              });
+            });
+            
+            req.on('error', (error) => {
+              console.error('Request error:', error);
+            });
+            
+            req.write(postData);
+            req.end();
+            
+          } catch (e) {
+            console.error('Failed to process input:', e);
+          }
+        });
+        
+        // Graceful shutdown
+        process.on('SIGINT', () => {
+          eventSource.close();
+          process.exit(0);
+        });
+      "]
+    }
+  }
+}
