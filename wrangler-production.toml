@@ -4,13 +4,13 @@ compatibility_date = "2024-01-01"
 compatibility_flags = ["nodejs_compat"]
 
 [vars]
-# Production Basecamp Account ID (Fouq Agency)
-BASECAMP_ACCOUNT_ID = "6022466"
+# Your Basecamp Account ID
+BASECAMP_ACCOUNT_ID = "your_account_id_here"
 
 # Production secrets (managed via wrangler secret put):
 # BASECAMP_ACCESS_TOKEN - Production OAuth access token from Basecamp
-# BASECAMP_CLIENT_ID - "2d6f508f858abd5101af6f07737df924506218c3"
-# BASECAMP_CLIENT_SECRET - "f6d55354e2ba1d438596dd587c65cff4e38a47a1"
+# BASECAMP_CLIENT_ID - Your OAuth client ID from Basecamp integration
+# BASECAMP_CLIENT_SECRET - Your OAuth client secret from Basecamp integration
 
 [build]
 command = "echo 'TypeScript compilation via wrangler'"

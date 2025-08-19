@@ -5,7 +5,7 @@
   "compatibility_flags": ["nodejs_compat"],
   
   "vars": {
-    "BASECAMP_ACCOUNT_ID": "6022466"
+    "BASECAMP_ACCOUNT_ID": "your_account_id_here"
   },
   
   "observability": {

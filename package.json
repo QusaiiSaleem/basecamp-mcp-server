@@ -1,7 +1,7 @@
 {
   "name": "basecamp-mcp-server",
-  "version": "4.3.0",
-  "description": "Enhanced Basecamp MCP Server with AUTO-LOOKUP for 7 high-risk tools",
+  "version": "6.0.0",
+  "description": "Complete Basecamp MCP Server with 59 comprehensive tools for full Basecamp API coverage",
   "main": "src/index.ts",
   "scripts": {
     "dev": "wrangler dev",
