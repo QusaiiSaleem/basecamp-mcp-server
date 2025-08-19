@@ -2,6 +2,40 @@
 
 A comprehensive **Model Context Protocol (MCP)** server that provides complete programmatic access to **Basecamp 4 API**. Perfect for AI agents, workflow automation, and custom integrations.
 
+## 🚀 NEW in v4.3.0: AUTO-LOOKUP Enhancement
+
+**No more 404 errors!** Our enhanced server now automatically finds required resource IDs for 7 high-risk tools:
+
+✅ **get_message_board** - Just provide `project_id`  
+✅ **get_todo_lists** - Just provide `project_id`  
+✅ **get_documents** - Just provide `project_id`  
+✅ **get_messages** - Just provide `project_id`  
+✅ **create_todo_list** - Just provide `project_id` + `name`  
+✅ **create_document** - Just provide `project_id` + `title`  
+✅ **create_message** - Just provide `project_id` + `subject` + `content`  
+🆕 **get_all_project_todos** - New convenience tool for getting ALL todos
+
+**Before v4.3.0** (❌ Complex):
+```json
+{
+  "tool": "get_todo_lists",
+  "arguments": {
+    "project_id": "123456",
+    "todoset_id": "789012"  // ← Required but hard to find
+  }
+}
+```
+
+**After v4.3.0** (✅ Simple):
+```json
+{
+  "tool": "get_todo_lists", 
+  "arguments": {
+    "project_id": "123456"  // ← That's it!
+  }
+}
+```
+
 [![Deploy to Cloudflare Workers](https://img.shields.io/badge/Deploy%20to-Cloudflare%20Workers-orange)](https://workers.cloudflare.com/)
 [![MCP Protocol](https://img.shields.io/badge/MCP-2025--03--26-blue)](https://modelcontextprotocol.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
@@ -155,9 +189,10 @@ Add to your MCP configuration (`~/.claude/mcp_servers.json`):
 ### ✅ Todo Management  
 | Tool | Description | Parameters |
 |------|-------------|------------|
-| `get_todo_lists` | Get todo lists | `project_id`, `todoset_id` |
-| `create_todo_list` | Create todo list | `project_id`, `todoset_id`, `name` |
+| `get_todo_lists` 🚀 | Get todo lists (AUTO-LOOKUP) | `project_id` |
+| `create_todo_list` 🚀 | Create todo list (AUTO-LOOKUP) | `project_id`, `name` |
 | `get_todos` | Get todos from list | `project_id`, `todolist_id` |
+| `get_all_project_todos` 🆕 | Get ALL todos (convenience) | `project_id` |
 | `create_todo` | Create new todo | `project_id`, `todolist_id`, `content` |
 | `update_todo` | Update todo details | `project_id`, `todo_id`, `content` |
 | `complete_todo` | Mark todo complete | `project_id`, `todo_id` |
@@ -167,9 +202,9 @@ Add to your MCP configuration (`~/.claude/mcp_servers.json`):
 ### 💬 Communication
 | Tool | Description | Parameters |
 |------|-------------|------------|
-| `get_message_board` | Get message board | `project_id`, `message_board_id` |
-| `get_messages` | Get messages | `project_id`, `message_board_id` |
-| `create_message` | Create new message | `project_id`, `message_board_id`, `subject`, `content` |
+| `get_message_board` 🚀 | Get message board (AUTO-LOOKUP) | `project_id` |
+| `get_messages` 🚀 | Get messages (AUTO-LOOKUP) | `project_id` |
+| `create_message` 🚀 | Create new message (AUTO-LOOKUP) | `project_id`, `subject`, `content` |
 | `update_message` | Edit message | `project_id`, `message_id`, `content` |
 | `add_comment_to_message` | Reply to message | `project_id`, `message_id`, `content` |
 | `post_campfire_message` | Chat message | `project_id`, `campfire_id`, `content` |
@@ -177,8 +212,8 @@ Add to your MCP configuration (`~/.claude/mcp_servers.json`):
 ### 📄 Documents & Files
 | Tool | Description | Parameters |
 |------|-------------|------------|
-| `get_documents` | List documents | `project_id`, `vault_id` |
-| `create_document` | Create document | `project_id`, `vault_id`, `title`, `content` |
+| `get_documents` 🚀 | List documents (AUTO-LOOKUP) | `project_id` |
+| `create_document` 🚀 | Create document (AUTO-LOOKUP) | `project_id`, `title`, `content` |
 | `update_document` | Edit document | `project_id`, `document_id`, `title`, `content` |
 | `upload_attachment` | Upload file | `file_data`, `filename`, `content_type` |
 | `get_attachments` | List project files | `project_id` |
